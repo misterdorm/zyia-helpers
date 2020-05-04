@@ -1,3 +1,5 @@
+scp.sh
+*.html
 *.gem
 *.rbc
 /.config

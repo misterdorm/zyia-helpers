@@ -6,7 +6,7 @@ require 'open-uri'
 products = {}
 baseurl = 'https://www.myzyia.com/ADENA/shop/catalog.aspx'
 
-now = Time.new.to_i
+now = Time.new
 page = 0
 
 loop do
@@ -86,10 +86,12 @@ products.each_pair do |item, info|
   #puts "#{info[:descr]}; #{info[:price]}; #{info[:sizes].join(',')}"
 end
 
-file = "zyia-inventory-#{now}.txt"
+file = "zyia-inventory-#{now.to_i}.html"
 puts "Writing inventory to #{file}"
 File.open(file, 'w') do |f|
+  f.write "<html><head><title>Zyia Stock #{now.asctime}</title></head><body><pre>\n"
   products.each_pair do |item, info|
     f.write "#{info[:descr].ljust(descr_width + 5)}#{info[:price].ljust(price_width + 5)}Sizes: #{info[:sizes].join(', ')}\n"
   end
+  f.write "</pre></body></html>\n"
 end
